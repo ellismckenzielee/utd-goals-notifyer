@@ -26,14 +26,18 @@ def get_data():
     teams = soupified.find_all(class_="team-name")
     match_status = soupified.find_all(class_='match-status')
     match_number = match_finder(match_status)
-    print(match_number)
-    print(teams[match_number*2].string)
-    print(teams[(match_number*2)+1].string)
 
-    print(goals[match_number*2].string)
-    print(goals[match_number*2].string)
+    return {
+        teams[match_number*2].string: goals[match_number*2].string,
+        teams[(match_number*2)+1].string: goals[match_number*2].string 
+    }, int(goals[match_number*2].string) + int(goals[match_number*2].string)
+ 
 
 ###MAIN LOOP
+total_goals = 1
 while True:
-    get_data()
+    current_score, goals = get_data()
+    if total_goals != goals:
+        print(current_score)
+        total_goals = goals
     time.sleep(60)
