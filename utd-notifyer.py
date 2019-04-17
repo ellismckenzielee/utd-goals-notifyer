@@ -2,6 +2,7 @@
 #Pushes a notification to Linux desktop
 
 import requests, bs4, time
+import subprocess as s
 
 url = 'https://www.goal.com/en-gb/team/manchester-united/fixtures-results/6eqit8ye8aomdsrrq0hk3v7gh'
 
@@ -38,6 +39,8 @@ total_goals = 1
 while True:
     current_score, goals = get_data()
     if total_goals != goals:
-        print(current_score)
         total_goals = goals
+        current_score_items = [(key, value) for (key,value) in current_score.items()]
+        s.call(['notify-send', current_score_items[0][0] + ' ' + current_score_items[0][1] + ' - ' + current_score_items[1][1] + ' ' + current_score_items[1][0]])
+    
     time.sleep(60)
